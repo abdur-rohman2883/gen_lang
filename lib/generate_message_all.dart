@@ -82,16 +82,16 @@ String generateKeyWithValue(String key, String value) {
   return '''\t\t"$key" : $value,''';
 }
 
-String generateSimpleMessage(String message) {
+String generateSimpleMessage(String? message) {
   return '''MessageLookupByLibrary.simpleMessage("${normalizedJsonMessage(message)}")''';
 }
 
-String generateMessageFunction(String args, String message) {
+String generateMessageFunction(String args, String? message) {
   return '''($args) => "${normalizedJsonMessage(message)}"''';
 }
 
-String generatePluralFunction(String args, String zero, String one, String two,
-    String few, String many, String other) {
+String generatePluralFunction(String args, String? zero, String? one,
+    String? two, String? few, String? many, String? other) {
   var zeroArg = generateArg(normalizedJsonMessage(zero));
   var oneArg = generateArg(normalizedJsonMessage(one));
   var twoArg = generateArg(normalizedJsonMessage(two));
@@ -103,7 +103,7 @@ String generatePluralFunction(String args, String zero, String one, String two,
 }
 
 String generateGenderFunction(
-    String args, String male, String female, String other) {
+    String args, String? male, String? female, String? other) {
   var maleArg = generateArg(normalizedJsonMessage(male));
   var femaleArg = generateArg(normalizedJsonMessage(female));
   var otherArg = generateArg(normalizedJsonMessage(other));
@@ -121,8 +121,8 @@ String generateFindExact(String locale) {
         return _\$$locale;''';
 }
 
-bool hasArgsInMessage(String message) {
-  return ARG_REG_EXP.hasMatch(message);
+bool hasArgsInMessage(String? message) {
+  return ARG_REG_EXP.hasMatch(message ?? '');
 }
 
 bool hasArgsInPlural(String zero, String one, String two, String few,
@@ -130,7 +130,7 @@ bool hasArgsInPlural(String zero, String one, String two, String few,
   List<String> plurals = [zero, one, two, few, many, other];
 
   for (String plural in plurals) {
-    if (null != plural && ARG_REG_EXP.hasMatch(plural)) {
+    if (ARG_REG_EXP.hasMatch(plural)) {
       return true;
     }
   }
